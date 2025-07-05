@@ -4,7 +4,7 @@ function App() {
   return (
     <div>
       <h1>Steam Login Demo</h1>
-      <a href="https://www.5stack.online/auth/steam">
+      <a href="https://5stack.up.railway.app/auth/steam">
         <button>Login with Steam</button>
       </a>
     </div>

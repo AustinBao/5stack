@@ -8,7 +8,7 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://5stack.online',
   credentials: true
 }));
 
@@ -36,7 +36,13 @@ passport.use(new SteamStrategy(
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    secure: true,            // true if using HTTPS
+    sameSite: 'none',        // important for cross-site cookies
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+  }
 }));
 
 app.use(passport.initialize());
