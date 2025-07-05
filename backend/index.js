@@ -45,6 +45,11 @@ app.use(session({
   }
 }));
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something broke!', details: err.message });
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
