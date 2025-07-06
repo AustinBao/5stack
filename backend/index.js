@@ -64,8 +64,8 @@ app.get('/auth/steam/return',
   }
 );
 
-app.get('/profile', (req, res) => {
-  if (!req.isAuthenticated()) return res.redirect('/');
+app.get('/api/profile', (req, res) => {
+  if (!req.isAuthenticated()) return res.status(401).json({ error: 'Not authenticated' });
   res.json(req.user);
 });
 
