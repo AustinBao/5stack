@@ -65,7 +65,7 @@ app.get('/auth/steam',
 app.get('/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/profile');
+    res.redirect('/profile');  
   }
 );
 
