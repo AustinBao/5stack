@@ -17,11 +17,6 @@ dotenv.config();
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
-console.log('HOST:', process.env.HOST);
-console.log('returnURL:', `${process.env.HOST}/auth/steam/return`);
-console.log('realm:', process.env.HOST);
-
-
 passport.use(new SteamStrategy(
   {
     returnURL: `${process.env.HOST}/auth/steam/return`,
