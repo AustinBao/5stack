@@ -1,28 +1,30 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 function Profile() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch('https://5stack.up.railway.app/profile', {
-      credentials: 'include',
-    })
-      .then(res => (res.ok ? res.json() : null))
-      .then(data => setUser(data));
+    async function getUser() {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/profile`, {
+          withCredentials: true, // send cookies
+        });
+        setUser(res.data);
+      } catch (err) {
+        setUser(null);
+      }
+    }
+    getUser();
   }, []);
 
-  if (!user)
-    return (
-      <a href="https://5stack.up.railway.app/auth/steam">
-        Login with Steam
-      </a>
-    );
+  if (!user) return <a href={`${import.meta.env.VITE_API_URL}/auth/steam`}>Login with Steam</a>;
 
   return (
     <div>
       <h1>Welcome, {user.displayName}</h1>
       <img src={user.photos?.[2]?.value} alt="avatar" />
-      <a href="https://5stack.up.railway.app/logout">Logout</a>
+      <a href={`${import.meta.env.VITE_API_URL}/logout`}>Logout</a>
     </div>
   );
 }
