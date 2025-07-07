@@ -40,8 +40,8 @@ app.use(session({
   cookie: {
     secure: true,            // true if using HTTPS
     sameSite: 'none',        // important for cross-site cookies
-    httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 1 day
+    domain: '.5stack.online'
   }
 }));
 
