@@ -7,7 +7,7 @@ function Profile() {
   useEffect(() => {
     async function getUser() {
       try {
-        const res = await axios.get('/api/profile', { withCredentials: true });
+        const res = await axios.get('https://api.5stack.online/api/profile', { withCredentials: true });
         console.log('User data:', res.data);
         setUser(res.data);
       } catch (err) {
