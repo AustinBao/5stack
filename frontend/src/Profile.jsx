@@ -23,7 +23,7 @@ function Profile() {
     <div>
       <h1>Welcome, {user.displayName}</h1>
       <img src={user.photos?.[2]?.value} alt="avatar" />
-      <a href="/auth/logout">Logout</a>
+      <a href="/logout">Logout</a>
     </div>
   );
 }
