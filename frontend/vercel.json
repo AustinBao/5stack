@@ -1,16 +1,7 @@
 {
   "rewrites": [
-    {
-      "source": "/auth/(.*)",
-      "destination": "https://api.5stack.online/auth/$1"
-    },
-    {
-      "source": "/api/(.*)",
-      "destination": "https://api.5stack.online/api/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/auth/(.*)", "destination": "https://api.5stack.online/auth/$1" },
+    { "source": "/api/(.*)", "destination": "https://api.5stack.online/api/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

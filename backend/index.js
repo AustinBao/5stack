@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 const app = express();
-app.set('trust proxy', 1); 
 
 app.use(cors({
   origin: 'https://5stack.online',
@@ -17,6 +16,11 @@ dotenv.config();
 
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
+
+console.log('HOST:', process.env.HOST);
+console.log('returnURL:', `${process.env.HOST}/auth/steam/return`);
+console.log('realm:', process.env.HOST);
+
 
 passport.use(new SteamStrategy(
   {
@@ -34,9 +38,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24,
-    sameSite: "none",     
-    secure: true
+    secure: true,            // true if using HTTPS
+    sameSite: 'none',        // important for cross-site cookies
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
   }
 }));
 
@@ -60,19 +65,14 @@ app.get('/auth/steam',
 app.get('/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('https://www.5stack.online/profile');
+    res.redirect('https://5stack.online/profile');
   }
 );
 
-app.get('/api/profile', (req, res) => {
-  console.log('Cookies:', req.headers.cookie);
-  console.log('Session:', req.session);
-  console.log('User:', req.user);
-
-  if (!req.isAuthenticated()) return res.status(401).json({ error: 'Not authenticated' });
+app.get('/profile', (req, res) => {
+  if (!req.isAuthenticated()) return res.redirect('/');
   res.json(req.user);
 });
-
 
 
 app.get('/logout', (req, res, next) => {
