@@ -38,17 +38,13 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,            // true if using HTTPS
-    sameSite: 'none',        // important for cross-site cookies
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
+    secure: true,            
+    sameSite: 'none',        
+    maxAge: 24 * 60 * 60 * 1000, 
     domain: '.5stack.online'
   }
 }));
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something broke!', details: err.message });
-});
 
 app.use(passport.initialize());
 app.use(passport.session());
