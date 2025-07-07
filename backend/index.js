@@ -8,7 +8,7 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors({
-  origin: 'https://5stack.online',
+  origin: ['https://5stack.online', 'https://www.5stack.online'],
   credentials: true
 }));
 
