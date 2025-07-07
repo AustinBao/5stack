@@ -36,8 +36,7 @@ app.use(session({
   cookie: {
     maxAge: 1000 * 60 * 60 * 24,
     sameSite: "none",     
-    secure: true,
-    domain: '.5stack.online'      
+    secure: true
   }
 }));
 
