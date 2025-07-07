@@ -66,8 +66,11 @@ app.get('/auth/steam/return',
 );
 
 app.get('/profile', (req, res) => {
-  if (!req.isAuthenticated()) return res.redirect('/');
-  res.json(req.user);
+  if (!req.isAuthenticated()){
+    res.json({"message": "Not authenticated"});
+  } else {
+    res.json(req.user);
+  }
 });
 
 
