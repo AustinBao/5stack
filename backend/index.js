@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 const app = express();
+app.set('trust proxy', 1); 
 
 app.use(cors({
   origin: 'https://5stack.online',
@@ -32,6 +33,7 @@ app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: false,
+  proxy: true,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24,
     sameSite: "none",     

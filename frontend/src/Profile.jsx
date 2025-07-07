@@ -7,9 +7,8 @@ function Profile() {
   useEffect(() => {
     async function getUser() {
       try {
-        const res = await axios.get('/api/profile', {
-          withCredentials: true, // send cookies for session
-        });
+        const res = await axios.get('/api/profile', { withCredentials: true });
+        console.log('User data:', res.data);
         setUser(res.data);
       } catch (err) {
         setUser(null);
