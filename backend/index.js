@@ -33,7 +33,6 @@ app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: false,
-  proxy: true,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24,
     sameSite: "none",     
@@ -61,7 +60,7 @@ app.get('/auth/steam',
 app.get('/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('https://www.5stack.online/profile');
+    res.redirect('/profile');
   }
 );
 
