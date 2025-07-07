@@ -17,7 +17,7 @@ function Profile() {
     getUser();
   }, []);
 
-  // if (!user) return <a href="/auth/steam">Login with Steam</a>;
+  if (!user) return <a href="/auth/steam">Login with Steam</a>;
 
   return (
     <div>
