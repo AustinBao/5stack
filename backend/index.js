@@ -64,9 +64,14 @@ app.get('/auth/steam/return',
 );
 
 app.get('/api/profile', (req, res) => {
+  console.log('Cookies:', req.headers.cookie);
+  console.log('Session:', req.session);
+  console.log('User:', req.user);
+
   if (!req.isAuthenticated()) return res.status(401).json({ error: 'Not authenticated' });
   res.json(req.user);
 });
+
 
 
 app.get('/logout', (req, res, next) => {
