@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     gamesContainer.innerHTML = "";
 
     if (!gamesToRender.length) {
-      gamesContainer.innerHTML = `<p class="text-white">No shared games found.</p>`;
+      gamesContainer.innerHTML = `<h4 class="text-white">No shared games found.</h4>`;
       return;
     }
 
