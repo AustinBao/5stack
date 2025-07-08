@@ -1,0 +1,7 @@
+.steam-gradient {
+  background: linear-gradient(180deg, #0B0F2F 0%, #1B5D8D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
