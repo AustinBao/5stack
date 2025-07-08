@@ -4,28 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectedFriendsContainer = document.getElementById("selectedFriends");
   const gamesContainer = document.getElementById("gamesContainer");
 
-  // Keep track of selected friend SteamIDs
   let selectedFriendIDs = [];
 
-  // Clear and rebuild autocomplete list based on current input
   function updateAutocompleteList(query) {
-    autocompleteList.innerHTML = "";
+    autocompleteList.innerHTML = "";  // clear previous results (eg. typing “a” might list 10 names. Typing “al” next would add more names on top of the old ones.)
 
-    if (!query.trim()) return;
+    if (!query.trim()) return;  // stop if query is empty
 
     const filtered = friends.filter(friend =>
-      friend.personaname.toLowerCase().includes(query.toLowerCase()) &&
-      !selectedFriendIDs.includes(friend.steamid) // exclude already selected
+      friend.personaname.toLowerCase().includes(query.toLowerCase()) && 
+      !selectedFriendIDs.includes(friend.steamid) // exclude already selected friends
     );
 
-    filtered.forEach(friend => {
+    filtered.forEach(friend => { // for each friend that matches the query, create a list item
       const li = document.createElement("li");
       li.classList.add("list-group-item", "list-group-item-action", "d-flex", "align-items-center", "gap-2");
       li.style.cursor = "pointer";
       li.innerHTML = `
         <img src="${friend.avatar}" alt="${friend.personaname}" style="width: 32px; height: 32px; border-radius: 50%;">
-        <span>${friend.personaname}</span>
-      `;
+        <span>${friend.personaname}</span>`;
 
       li.addEventListener("click", () => {
         addFriendTag(friend);
@@ -34,25 +31,22 @@ document.addEventListener("DOMContentLoaded", () => {
         filterGamesBySelectedFriends();
       });
 
-      autocompleteList.appendChild(li);
+      autocompleteList.appendChild(li); // adds the list item to the search list
     });
   }
 
-  // Add friend tag to selected list
   function addFriendTag(friend) {
-    // Prevent duplicates
-    if (selectedFriendIDs.includes(friend.steamid)) return;
+    if (selectedFriendIDs.includes(friend.steamid)) return; // Prevents duplicates
 
     selectedFriendIDs.push(friend.steamid);
 
     const tag = document.createElement("span");
-    tag.className = "badge bg-primary d-flex align-items-center gap-2 px-2 py-1";
+    tag.className = "badge bg-primary d-flex align-items-center gap-2 px-2 py-1"; // Bootstrap badge class for styling. Literally perfect for this.
     tag.id = `friend-${friend.steamid}`;
     tag.innerHTML = `
       <img src="${friend.avatar}" alt="${friend.personaname}" style="width: 20px; height: 20px; border-radius: 50%;">
       <span>${friend.personaname}</span>
-      <button type="button" class="btn-close btn-close-white btn-sm" aria-label="Remove"></button>
-    `;
+      <button type="button" class="btn-close btn-close-white btn-sm" aria-label="Remove"></button>`;
 
     tag.querySelector("button").addEventListener("click", () => {
       tag.remove();
@@ -63,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedFriendsContainer.appendChild(tag);
   }
 
-  // Render game cards
   function renderGames(gamesToRender) {
     gamesContainer.innerHTML = "";
 
@@ -88,39 +81,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Filter games by selected friends' shared games intersection
   function filterGamesBySelectedFriends() {
     if (selectedFriendIDs.length === 0) {
       renderGames(allGames);
       return;
     }
-
-    // Get Sets of shared games for each friend
-    const setsOfAppIDs = selectedFriendIDs.map(id => new Set(sharedGamesByFriend[id] || []));
-
-    // Intersection of all selected friends' game appids
-    const commonAppIDs = setsOfAppIDs.reduce((acc, set) =>
-      new Set([...acc].filter(appid => set.has(appid)))
-    );
-
-    // Filter allGames by these common appids
-    const filteredGames = allGames.filter(game => commonAppIDs.has(game.appid));
+    const setsOfAppIDs = selectedFriendIDs.map(id => new Set(sharedGamesByFriend[id] || [])); // puts selected friends' game lists in Sets (quicker + easier to check intersections).
+    
+    const commonAppIDs = setsOfAppIDs.reduce((acc, set) => 
+      new Set([...acc].filter(appid => set.has(appid))) // finds common game IDs all selected friends share.
+    ); 
+    
+    const filteredGames = allGames.filter(game => commonAppIDs.has(game.appid)); // filters your games list to only include games that are in the commonAppIDs set.
 
     renderGames(filteredGames);
   }
 
-  // Input event to update autocomplete
   searchInput.addEventListener("input", e => {
     updateAutocompleteList(e.target.value);
   });
 
-  // Click outside autocomplete closes the list
   document.addEventListener("click", e => {
     if (!autocompleteList.contains(e.target) && e.target !== searchInput) {
       autocompleteList.innerHTML = "";
     }
   });
-
-  // Initial render of all games
-  renderGames(allGames);
 });

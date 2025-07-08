@@ -16,8 +16,8 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
 passport.use(new SteamStrategy({
-    returnURL: 'http://computer.local:3000/auth/steam/return',
-    realm: 'http://computer.local:3000/',
+    returnURL: `${process.env.HOST}/auth/steam/return`,
+    realm: `${process.env.HOST}/`,
     apiKey: process.env.STEAM_API_KEY
   },
   function(identifier, profile, done) {
@@ -51,7 +51,7 @@ app.get('/auth/steam/return',
 
 app.get('/profile', ensureAuthenticated, async (req, res) => {
   const steamId = req.user.id;
-  const apiKey = '74F954A26D16E199225E2761349A6CCD';
+  const apiKey = process.env.STEAM_API_KEY;
 
   const games = await fetchPersonalLibrary(steamId, apiKey);
   const friends = await fetchSteamFriends(steamId, apiKey); 
@@ -61,10 +61,8 @@ app.get('/profile', ensureAuthenticated, async (req, res) => {
     const friendGames = await fetchFriendLibrary(friend.steamid, apiKey);
     sharedGamesByFriend[friend.steamid] = friendGames;
   }
-
   res.render('profile', { user: req.user, games, friends, sharedGamesByFriend });
 });
-
 
 async function fetchPersonalLibrary(steamId, apiKey) {
   const url = `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/`;
