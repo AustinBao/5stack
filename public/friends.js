@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const autocompleteList = document.getElementById("autocompleteList");
   const selectedFriendsContainer = document.getElementById("selectedFriends");
   const gamesContainer = document.getElementById("gamesContainer");
+  const randomGameButton = document.getElementById("randomGame");
 
   let selectedFriendIDs = [];
 
@@ -100,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   searchInput.addEventListener("input", e => {
     updateAutocompleteList(e.target.value);
   });
-
+  
   document.addEventListener("click", e => {
     if (!autocompleteList.contains(e.target) && e.target !== searchInput) {
       autocompleteList.innerHTML = "";

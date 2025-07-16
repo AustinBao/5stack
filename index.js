@@ -9,7 +9,7 @@ const axios = require('axios');
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const envPath = NODE_ENV === 'development' ? '.env.dev' : '.env';
 require('dotenv').config({ path: path.resolve(__dirname, envPath) });
-console.log(`✅ Loaded environment: ${NODE_ENV} from ${envPath}`);
+console.log(`Loaded environment: ${NODE_ENV} from ${envPath}`);
 
 const app = express(); 
 app.set('view engine', 'ejs');
