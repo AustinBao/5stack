@@ -2,12 +2,16 @@ const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
 const SteamStrategy = require('passport-steam').Strategy;
+const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-const app = express(); 
-require('dotenv').config();
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const envPath = NODE_ENV === 'development' ? '.env.dev' : '.env';
+require('dotenv').config({ path: path.resolve(__dirname, envPath) });
+console.log(`✅ Loaded environment: ${NODE_ENV} from ${envPath}`);
 
+const app = express(); 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
