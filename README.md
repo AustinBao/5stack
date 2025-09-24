@@ -16,9 +16,7 @@
 
 ### **🎯 The Solution**
 - **Fast Library Comparison**: Compares up to 250 friends’ libraries in seconds
-
 - **Smart Filtering**: Shows only games shared by selected friends
-
 - **Quick Search**: Autocomplete helps find friends instantly
 
 ---
@@ -39,12 +37,19 @@
 ## 📁 **Project Structure**
 ```
 5stack/
-├── public/             # Static assets (CSS, images, client JS)
-├── views/              # EJS templates for pages
-├── routes/             # Express routes (home, Steam API calls, game compare)
-├── app.js              # Main Express server file
-├── package.json        # Dependencies and scripts
-└── .env                # Steam API key (not committed)
+├── public/                 # Static assets
+│   ├── friends.js          # Handles friend selection and filtering
+│   ├── index.html          # Landing page
+│   ├── style.css           # Custom styles
+│   └── steam.png           # Steam logo image
+│
+├── views/                  # EJS templates
+│   └── profile.ejs         # Profile + game comparison view
+│
+├── index.js                # Main Express server
+├── package.json            # Dependencies and scripts
+├── nodemon.json            # Dev server config
+└── README.md               # Project docs
 ```
 
 ---
@@ -70,7 +75,7 @@ Select friend
 ```
 
 ### **3. View Shared Games**
-```python
+```
 Compare libraries
     ↓
 Show common games
